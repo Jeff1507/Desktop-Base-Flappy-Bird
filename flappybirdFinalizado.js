@@ -37,11 +37,34 @@ let gravidade = 0.4; // Gravidade aplicada ao pássaro
 let jogoEncerrado = false; // Indica se o jogo está encerrado
 let pontuacao = 0; // Pontuação do jogador
 
+function obterQuantiaDepositada() {
+    const inputDinheiro = document.getElementById("iDinheiro");
+    const quantiaDepositada = parseFloat(inputDinheiro.value) || 0;
+
+    inputDinheiro.value = "";
+
+    return quantiaDepositada;
+}
+
+document.getElementById("btn-depositar").addEventListener("click", function () {
+    const quantiaDepositada = obterQuantiaDepositada();
+    pontuacao = quantiaDepositada;
+    
+    console.log("Quantia depositada: R$" + quantiaDepositada);
+});
+
+function iniciarJogo(params) {
+    requestAnimationFrame(atualizar);
+
+    // Gera novos canos a cada 1.5 segundos usando setInterval
+    setInterval(gerarCanos, 1500);
+}
+
 // Aguarda até que a página HTML seja totalmente carregada antes de executar o código
 window.onload = function () {
     // Obtém a referência do elemento do tabuleiro no HTML usando o ID "tabuleiro"
     tabuleiro = document.getElementById("tabuleiro");
-
+    
     // Define a altura e largura do tabuleiro com base nas variáveis predefinidas
     tabuleiro.height = alturaTabuleiro;
     tabuleiro.width = larguraTabuleiro;
