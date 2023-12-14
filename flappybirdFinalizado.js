@@ -53,13 +53,6 @@ document.getElementById("btn-depositar").addEventListener("click", function () {
     console.log("Quantia depositada: R$" + quantiaDepositada);
 });
 
-function iniciarJogo(params) {
-    requestAnimationFrame(atualizar);
-
-    // Gera novos canos a cada 1.5 segundos usando setInterval
-    setInterval(gerarCanos, 1500);
-}
-
 // Aguarda até que a página HTML seja totalmente carregada antes de executar o código
 window.onload = function () {
     // Obtém a referência do elemento do tabuleiro no HTML usando o ID "tabuleiro"
