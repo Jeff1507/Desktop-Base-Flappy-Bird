@@ -36,7 +36,6 @@ let gravidade = 0.4; // Gravidade aplicada ao pássaro
 
 let jogoEncerrado = false; // Indica se o jogo está encerrado
 let pontuacao = 0; // Pontuação do jogador
-let dinheiro = 0;
 
 function obterQuantiaDepositada() {
     const inputDinheiro = document.getElementById("iDinheiro");
@@ -93,13 +92,12 @@ window.onload = function () {
     document.getElementById("btn-depositar").addEventListener("click", function () {
         const quantiaDepositada = obterQuantiaDepositada();
         pontuacao = quantiaDepositada;
-        dinheiro = quantiaDepositada;
 
         iniciarJogo();
         document.getElementById('iDeposito').style.display = 'none';
 
         
-        console.log("Quantia depositada: R$" + dinheiro);
+        console.log("Quantia depositada: R$" + quantiaDepositada);
     });
     
 }
