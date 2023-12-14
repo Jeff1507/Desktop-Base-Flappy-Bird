@@ -36,6 +36,7 @@ let gravidade = 0.4; // Gravidade aplicada ao pássaro
 
 let jogoEncerrado = false; // Indica se o jogo está encerrado
 let pontuacao = 0; // Pontuação do jogador
+let dinheiro = 0;
 
 function obterQuantiaDepositada() {
     const inputDinheiro = document.getElementById("iDinheiro");
@@ -46,12 +47,19 @@ function obterQuantiaDepositada() {
     return quantiaDepositada;
 }
 
-document.getElementById("btn-depositar").addEventListener("click", function () {
-    const quantiaDepositada = obterQuantiaDepositada();
-    pontuacao = quantiaDepositada;
+
+
+function iniciarJogo() {
+    // Inicia o loop de atualização do jogo usando requestAnimationFrame
+    requestAnimationFrame(atualizar);
+
+    // Gera novos canos a cada 1.5 segundos usando setInterval
     
-    console.log("Quantia depositada: R$" + quantiaDepositada);
-});
+    setInterval(gerarCanos, 1500);
+
+    // Adiciona um ouvinte de evento para responder às teclas pressionadas
+    document.addEventListener("keydown", moverPassaro);
+}
 
 // Aguarda até que a página HTML seja totalmente carregada antes de executar o código
 window.onload = function () {
@@ -81,16 +89,22 @@ window.onload = function () {
     imagemCanoInferior = new Image();
     imagemCanoInferior.src = "assets/cano-baixo.png";
 
-    // Inicia o loop de atualização do jogo usando requestAnimationFrame
-    requestAnimationFrame(atualizar);
+    obterQuantiaDepositada();
+    document.getElementById("btn-depositar").addEventListener("click", function () {
+        const quantiaDepositada = obterQuantiaDepositada();
+        pontuacao = quantiaDepositada;
+        dinheiro = quantiaDepositada;
 
-    // Gera novos canos a cada 1.5 segundos usando setInterval
-    setInterval(gerarCanos, 1500);
+        iniciarJogo();
+        document.getElementById('iDeposito').style.display = 'none';
 
-    // Adiciona um ouvinte de evento para responder às teclas pressionadas
-    document.addEventListener("keydown", moverPassaro);
-
+        
+        console.log("Quantia depositada: R$" + dinheiro);
+    });
+    
 }
+
+
 
 function moverPassaro(evento) {
     // Verifica se a tecla pressionada é a barra de espaço, seta para cima ou tecla X
@@ -137,8 +151,8 @@ function atualizar() {
         if (!cano.passou && passaro.x > cano.x + cano.largura) {
             pontuacao += 0.5; // Incrementa a pontuação por meio ponto
             cano.passou = true; // Marca que o pássaro já passou por esse cano
+            
         }
-
         // Verifica se há colisão entre o pássaro e o cano
         if (detectarColisao(passaro, cano)) {
             jogoEncerrado = true; // Marca que o jogo está encerrado em caso de colisão
@@ -153,10 +167,10 @@ function atualizar() {
     // Pontuação
     contexto.fillStyle = "white";
     contexto.font = "45px sans-serif";
-    contexto.fillText(pontuacao, 5, 45);
-
-
-
+    contexto.fillText("R$ "+pontuacao, 5, 45);
+    if (pontuacao>=100) {
+        velocidadeX += -6;
+    }
 }
 
 function gerarCanos() {
