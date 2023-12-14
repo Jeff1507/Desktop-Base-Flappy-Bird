@@ -168,9 +168,14 @@ function atualizar() {
     contexto.fillStyle = "white";
     contexto.font = "45px sans-serif";
     contexto.fillText("R$ "+pontuacao, 5, 45);
-    if (pontuacao>=100) {
-        velocidadeX += -6;
-    }
+
+    const  num_vel_a_cada_100= 2;
+
+    const multiplo_100 = Math.floor(pontuacao / 100);
+
+    velocidadeX = -2 - multiplo_100 * num_vel_a_cada_100;
+
+    console.log(velocidadeX);
 }
 
 function gerarCanos() {
